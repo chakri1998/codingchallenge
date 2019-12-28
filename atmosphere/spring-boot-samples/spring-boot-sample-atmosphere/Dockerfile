@@ -1,6 +1,17 @@
-FROM tomcat:9.0
-RUN echo 'Deploying War on Server'
-RUN rm -rf /usr/local/tomcat/webapps/*
-COPY target/demoapp-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+# Base Image
+FROM openjdk:8
+
+# Create DIR
+RUN mkdir -p /usr/src/myapp
+
+# COPY APPLICTAION COde
+COPY target/spring-boot-sample-atmosphere-1.4.0.BUILD-SNAPSHOT.jar    /usr/src/myapp
+
+# Setup Working DIR
+WORKDIR /usr/src/myapp
+
+#EXPOSE
 EXPOSE 8080
-CMD ["catalina.sh", "run"]
+
+# Start the Bot Service
+CMD ["java", "-jar", "spring-boot-sample-atmosphere-1.4.0.BUILD-SNAPSHOT.jar"]
